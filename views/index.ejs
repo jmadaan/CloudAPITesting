@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app="i2ChainApiTest">
+	<head>
+		<title>I2Chain API Test</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+	</head>
+	<body ng-controller="MainController as vm">
+		{{vm.message}}
+	</body>
+	<script>
+		var clientMessage =  <%- JSON.stringify(serverMessage) %>
+	</script>
+	<script src="/assets/js/app.js"></script>
+</html>
