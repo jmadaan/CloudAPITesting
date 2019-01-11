@@ -14,6 +14,10 @@ app.set('view engine', 'ejs');
 
 app.use('/assets', express.static(__dirname + '/public'));
 
+app.get('/', function(req, res) {
+  res.render('home');
+});
+
 app.get('/register', function(req, res) {
 	
 	console.log("Test Register API Call");
@@ -38,10 +42,10 @@ app.get('/register', function(req, res) {
         json: true
       },
       (error, response, body) => {
-        console.log('Sent register:\n', params, body);
+        //console.log('Sent register:\n', params, body);
         console.log('error:', error); // Print the error if one occurred
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-        console.log('body:', JSON.stringify(body));
+        //console.log('body:', JSON.stringify(body));
       }
     );
 
@@ -66,10 +70,11 @@ app.get('/getall', function(req, res) {
         json: true
       },
       (error, response, body) => {
-        console.log('Sent getAll:\n', body);
+        //console.log('Sent getAll:\n', body);
         console.log('error:', error); // Print the error if one occurred
-        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-        console.log('body:', JSON.stringify(body));
+        console.log('statusCode:', response.statusCode); 
+        //console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        //console.log('body:', JSON.stringify(body));
         let message = body;
         res.render('index', {serverMessage: message});
 

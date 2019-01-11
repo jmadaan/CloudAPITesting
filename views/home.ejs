@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us" ng-app="i2ChainApiTest">
+<html lang="en-us">
 	<head>
 		<title>I2Chain API Test</title>
 		 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -15,36 +15,15 @@
         </style>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
 	</head>
-	<body ng-controller="MainController as vm">
+	<body>
 		<header>
             <nav class="navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">I2Chain API Testing Stack</a>
                 </div>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                </ul>
             </div>
             </nav>
         </header>
-
-        <div class="container">
-            <div>
-				<h3>Users</h3>
-				<!--{{vm.message.value.users}}-->
-	            <ul class="list-group">
-	                <li class="list-group-item" ng-repeat="user in vm.message.value.users">
-	                	<p>{{ user.email }}</p>
-	                   
-	                </li>
-	            </ul>
-			</div>
-        </div>
-	</body>
-	<script>
-		var clientMessage =  <%- JSON.stringify(serverMessage) %>
-	</script>
-	<script src="/assets/js/app.js"></script>
+    </body>
 </html>
