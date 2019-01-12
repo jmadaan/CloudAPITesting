@@ -21,7 +21,6 @@
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">{{vm.message}}</a>
-                    
                 </div>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
@@ -29,14 +28,8 @@
             </div>
             </nav>
         </header>
-        <div class="container">
-            <a class="navbar-brand" href="/getall">Get All Users</a>
-            <a class="navbar-brand" href="/login">Login</a>
-            <a class="navbar-brand" href="/register">Register</a>
-        </div>
     </body>
     <script>
         var clientMessage =  <%- JSON.stringify(serverMessage) %>
     </script>
     <script src="/assets/js/app.js"></script>
-</html>
