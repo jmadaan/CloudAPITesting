@@ -1,5 +1,6 @@
 var express = require('express');
 var request = require('request');
+var bodyParser = require('body-parser');
 var app = express();
 var port = process.env.PORT || 3000;
 
@@ -11,6 +12,8 @@ const restApiPort = 8080;
 app.set('view engine', 'ejs');
 
 app.use('/assets', express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function(req, res) {
   let message = "I2Chain API Testing Stack";
@@ -42,11 +45,22 @@ app.get('/getall', function(req, res) {
     );
 });
 
-app.get('/login', function(req, res) {
+app.get('/loginform', function(req, res) {
+  console.log("Enter Data for Login API Call");
+  let message = "LoginForm Data";
+  res.render('loginform', {serverMessage: message});
+});
+
+app.post('/login', function(req, res) {
   console.log("Test Login API Call");
+  console.log(req.body.username);
+  console.log(req.body.password);
   let message = "Login API Test";
-  let email = "test1@i2chain.com";
-  let password = "password123";
+  //let email = "test1@i2chain.com";
+  //let password = "password123";
+  let email = req.body.username;
+  let password = req.body.password;
+
   const params = {
       email,
       password
@@ -62,7 +76,13 @@ app.get('/login', function(req, res) {
         console.log('error:', error); // Print the error if one occurred
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         let message = "Login API Test";
-        res.render('login', {serverMessage: message});
+        //let message1 = JSON.stringify(body.value);
+        //console.log("status: " + body.status);
+        if (body.status === "success")
+          apiResponse = "Login Successful";
+        else 
+          apiResponse = "Login Failed";
+        res.render('login', {serverMessage: message, apiResponse: apiResponse});
         console.log('body:', JSON.stringify(body));
       }
     );
