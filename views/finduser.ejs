@@ -27,7 +27,8 @@
                 </ul>
             </div>
             </nav>
-             <div class="container">
+            <div class="container">
+                <!--<p>Find User <%= JSON.stringify(apiResponse.status)%>: <%= JSON.stringify(apiResponse.value) %>-->
                 <p><%= apiResponse%></p>
             </div>
         </header>
@@ -36,4 +37,3 @@
         var clientMessage =  <%- JSON.stringify(serverMessage) %>
     </script>
     <script src="/assets/js/app.js"></script>
-</html>

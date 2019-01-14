@@ -57,6 +57,13 @@ app.get('/registerform', function(req, res) {
   res.render('registerform', {serverMessage: message});
 });
 
+app.get('/finduserform', function(req, res) {
+  console.log("Enter Data for Login API Call");
+  let message = "Find User";
+  res.render('finduserform', {serverMessage: message});
+});
+
+
 app.post('/login', function(req, res) {
   console.log("Test Login API Call");
   console.log(req.body.username);
@@ -134,6 +141,70 @@ app.post('/register', function(req, res) {
         console.log('body:', JSON.stringify(body));
       }
     );	
+});
+
+app.post('/finduser', function(req, res) {
+  console.log("Email: " + req.body.email);
+  console.log("UserID: " + req.body.userId);
+  let email = req.body.email;
+  let userid = req.body.userId;
+
+  if (email) {
+    let message = "Find User with Email API Test";
+    const params = {
+        email
+      };
+    request.post(
+        {
+          uri: `http://${restApiUrl}:${restApiPort}/api/user/email/`,
+          body: params,
+          json: true
+        },
+        (error, response, body) => {
+          //console.log('Sent register:\n', params, body);
+          console.log('error:', error); // Print the error if one occurred
+          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+          let message = "Find User API Test";
+          if (body)
+            apiResponse = "Find User Success with email: " + email + ". UserId : " +
+                          JSON.stringify(body.id);
+          else 
+            apiResponse = "Find User Failed with email: " +   email;
+          res.render('finduser', {serverMessage: message, apiResponse: apiResponse});
+          //res.render('register', {serverMessage: message});
+          console.log('body:', JSON.stringify(body));
+        }
+      );
+  }
+  else {
+     console.log("UserID: " + req.body.userId);
+     let message = "Find User with UserID API Test";
+      /*const params = {
+          email
+        };*/
+      request.get(
+          {
+            uri: `http://${restApiUrl}:${restApiPort}/api/user/`+userid,
+            json: true
+          },
+          (error, response, body) => {
+            //console.log('Sent register:\n', params, body);
+            console.log('error:', error); // Print the error if one occurred
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            let message = "Find User API Test";
+            if (body)
+              apiResponse = "Find User Success with email: "  +
+                            JSON.stringify(body.email);
+            else 
+              apiResponse = "Find User Failed with userID: " +   userid;
+            res.render('finduser', {serverMessage: message, apiResponse: apiResponse});
+            //res.render('register', {serverMessage: message});
+            console.log('body:', JSON.stringify(body));
+          }
+        ); 
+  }
+
+
 });
 
 app.get('/ejstest', function(req, res) {
