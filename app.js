@@ -47,8 +47,14 @@ app.get('/getall', function(req, res) {
 
 app.get('/loginform', function(req, res) {
   console.log("Enter Data for Login API Call");
-  let message = "LoginForm Data";
+  let message = "Enter Data for Login API Call";
   res.render('loginform', {serverMessage: message});
+});
+
+app.get('/registerform', function(req, res) {
+  console.log("Enter Data for Register API Call");
+  let message = "Enter Data for Register API Call";
+  res.render('registerform', {serverMessage: message});
 });
 
 app.post('/login', function(req, res) {
@@ -79,25 +85,30 @@ app.post('/login', function(req, res) {
         //let message1 = JSON.stringify(body.value);
         //console.log("status: " + body.status);
         if (body.status === "success")
-          apiResponse = "Login Successful";
+          apiResponse = "Login Successful: " + JSON.stringify(body.value);
         else 
-          apiResponse = "Login Failed";
+          apiResponse = "Login Failed: "+ JSON.stringify(body.value);
         res.render('login', {serverMessage: message, apiResponse: apiResponse});
         console.log('body:', JSON.stringify(body));
       }
     );
 });
 
-app.get('/register', function(req, res) {
+app.post('/register', function(req, res) {
 	console.log("Test Register API Call");
+  console.log(req.body.username);
+  console.log(req.body.password);
+  let message = "Register API Test";
 	/*request('http://www.google.com', function (error, response, body) {
 	  console.log('error:', error); // Print the error if one occurred
 	  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 	  //console.log('body:', body); // Print the HTML for the Google homepage.
 	});*/
-	let email = "test1@i2chain.com";
-	let password = "password123";
+	//let email = "test1@i2chain.com";
+	//let password = "password123";
 	let pubKey = "pubkey123";
+  let email = req.body.username;
+  let password = req.body.password;
 	const params = {
       email,
       password,
@@ -114,7 +125,12 @@ app.get('/register', function(req, res) {
         console.log('error:', error); // Print the error if one occurred
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         let message = "Register API Test";
-        res.render('register', {serverMessage: message});
+        if (body.status === "success")
+          apiResponse = "Registration Successful: " + JSON.stringify(body.value);
+        else 
+          apiResponse = "Registration Failed: "+ JSON.stringify(body.value);
+        res.render('register', {serverMessage: message, apiResponse: apiResponse});
+        //res.render('register', {serverMessage: message});
         console.log('body:', JSON.stringify(body));
       }
     );	
