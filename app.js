@@ -7,6 +7,7 @@ var port = process.env.PORT || 3000;
 
 const restApiUrl = 'ec2-user@ec2-13-56-232-7.us-west-1.compute.amazonaws.com'; // TODO: replace with dns once set up
 // const restApiUrl = "api.i2chain.io"
+//const restApiUrl = 'localhost';
 const restApiPort = 8080;
 
 app.set('view engine', 'ejs');
@@ -61,6 +62,12 @@ app.get('/finduserform', function(req, res) {
   console.log("Enter Data for Login API Call");
   let message = "Find User";
   res.render('finduserform', {serverMessage: message});
+});
+
+app.get('/adminuserform', function(req, res) {
+  console.log("Enter Data for Admin Activities Call");
+  let message = "Admin User";
+  res.render('adminuserform', {serverMessage: message});
 });
 
 
@@ -203,9 +210,67 @@ app.post('/finduser', function(req, res) {
           }
         ); 
   }
-
-
 });
+
+app.post('/adminuser', function(req, res) {
+  console.log("UserID: " + req.body.userId);
+  console.log("Password: " + req.body.pwd);
+  let userid = req.body.userId;
+  let pwd = req.body.pwd;
+  let userIdPwd = req.body.userIdPwd;
+  if (userid) {
+    let message = "Activate User with UserID API Test";
+    request.get(
+      {
+        uri: `http://${restApiUrl}:${restApiPort}/api/user/activation/`+userid,
+        json: true
+      },
+      (error, response, body) => {
+        //console.log('Sent register:\n', params, body);
+        console.log('error:', error); // Print the error if one occurred
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        if (body)
+          apiResponse = "Activate User Success with userId: " +   userid;
+        else 
+          apiResponse = "Activate User Failed with userID: " +   userid;
+        res.render('adminuser', {serverMessage: message, apiResponse: apiResponse});
+        //res.render('adminuser', {serverMessage: message});
+        console.log('body:', JSON.stringify(body));
+      }
+    ); 
+   // apiResponse = "Activate User Success with userId: " +   userid;
+    //res.render('adminuser', {serverMessage: message, apiResponse: apiResponse});
+  }
+  else if (pwd)
+  {
+    let message = "Change Password API Test";
+    apiResponse = "Change Password: ";
+    const params = {
+      pwd
+    };
+    request.put(
+      {
+        uri: `http://${restApiUrl}:${restApiPort}/api/user/changepwd/`+userIdPwd,
+        body: params,
+        json: true
+      },
+      (error, response, body) => {
+        //console.log('Sent register:\n', params, body);
+        console.log('error:', error); // Print the error if one occurred
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        if (body)
+          apiResponse = "Password Change Success for user with userId: " +   userIdPwd;
+        else 
+          apiResponse = "Password Change Failed for user with userId: " +   userIdPwd;
+        res.render('adminuser', {serverMessage: message, apiResponse: apiResponse});
+        //res.render('adminuser', {serverMessage: message});
+        console.log('body:', JSON.stringify(body));
+      }
+    ); 
+
+    //res.render('adminuser', {serverMessage: message, apiResponse: apiResponse});
+  }
+});  
 
 app.get('/ejstest', function(req, res) {
 	
