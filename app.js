@@ -215,9 +215,11 @@ app.post('/finduser', function(req, res) {
 app.post('/adminuser', function(req, res) {
   console.log("UserID: " + req.body.userId);
   console.log("Password: " + req.body.pwd);
+  console.log(" Forgot Password UserId: " + req.body.userIdFrgPwd);
   let userid = req.body.userId;
   let pwd = req.body.pwd;
   let userIdPwd = req.body.userIdPwd;
+  let userIdFrgPwd = req.body.userIdFrgPwd;
   if (userid) {
     let message = "Activate User with UserID API Test";
     request.get(
@@ -229,7 +231,7 @@ app.post('/adminuser', function(req, res) {
         //console.log('Sent register:\n', params, body);
         console.log('error:', error); // Print the error if one occurred
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-        if (body)
+        if (body && response.statusCode == 200)
           apiResponse = "Activate User Success with userId: " +   userid;
         else 
           apiResponse = "Activate User Failed with userID: " +   userid;
@@ -268,6 +270,30 @@ app.post('/adminuser', function(req, res) {
       }
     ); 
 
+    //res.render('adminuser', {serverMessage: message, apiResponse: apiResponse});
+  }
+  else if (userIdFrgPwd) {
+    let message = "Forgot Password API Test";
+    apiResponse = "Forgot Password: ";
+    console.log(" In Forgot Password Method: " + userIdFrgPwd);
+    request.put(
+      {
+        uri: `http://${restApiUrl}:${restApiPort}/api/user/forgotpwd/`+userIdFrgPwd,
+        json: true
+      },
+      (error, response, body) => {
+        //console.log('Sent register:\n', params, body);
+        console.log('error:', error); // Print the error if one occurred
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        if (body)
+          apiResponse = "Forgot Password Success for user with userId: " +   userIdFrgPwd;
+        else 
+          apiResponse = "Forgot Password Failed for user with userId: " +   userIdFrgPwd;
+        res.render('adminuser', {serverMessage: message, apiResponse: apiResponse});
+        //res.render('adminuser', {serverMessage: message});
+        console.log('body:', JSON.stringify(body));
+      }
+    ); 
     //res.render('adminuser', {serverMessage: message, apiResponse: apiResponse});
   }
 });  

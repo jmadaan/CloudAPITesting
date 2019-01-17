@@ -73,7 +73,7 @@
             <div class="tab">
              <button class="tablinks" onclick="openAdminuser(event, 'ActivateById')">ActivateById</button>
               <button class="tablinks" onclick="openAdminuser(event, 'ChangePassword')">ChangePassword</button>
-              <button class="tablinks" onclick="openAdminuser(event, 'FindById')">FindById</button>
+              <button class="tablinks" onclick="openAdminuser(event, 'ForgotPassword')">ForgotPassword</button>
             </div>
 
             <div id="ActivateById" class="tabcontent">
@@ -91,10 +91,10 @@
               </form>
             </div>
 
-            <div id="FindById" class="tabcontent">
-              <form name="form1_withId" action="/finduser" method="post">
-                <p>Enter UserID:<input name="userId" type="text" required/>
-                 <button type="submit" class="btn btn-default">Find</button>  
+            <div id="ForgotPassword" class="tabcontent">
+              <form name="form1_withId" action="/adminuser" method="post">
+                <p>Enter UserID:<input name="userIdFrgPwd" type="text" required/>
+                 <button type="submit" class="btn btn-default">Forgot Password</button>  
               </form>
             </div>
         </div>
