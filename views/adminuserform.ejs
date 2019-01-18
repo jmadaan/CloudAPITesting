@@ -74,6 +74,7 @@
              <button class="tablinks" onclick="openAdminuser(event, 'ActivateById')">ActivateById</button>
               <button class="tablinks" onclick="openAdminuser(event, 'ChangePassword')">ChangePassword</button>
               <button class="tablinks" onclick="openAdminuser(event, 'ForgotPassword')">ForgotPassword</button>
+              <button class="tablinks" onclick="openAdminuser(event, 'ResendAppDownloadLink')">ResendAppDownloadLink</button>
             </div>
 
             <div id="ActivateById" class="tabcontent">
@@ -97,6 +98,14 @@
                  <button type="submit" class="btn btn-default">Forgot Password</button>  
               </form>
             </div>
+
+            <div id="ResendAppDownloadLink" class="tabcontent">
+              <form name="form1_resendappdownloadlink" action="/adminuser" method="post">
+                <p>Enter Email:<input name="emailAppDownloadlink" type="text" required/>
+                 <button type="submit" class="btn btn-default">Download App Link</button>  
+              </form>
+            </div>
+
         </div>
     </body>
     <script>

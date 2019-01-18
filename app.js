@@ -246,10 +246,12 @@ app.post('/adminuser', function(req, res) {
   console.log("UserID: " + req.body.userId);
   console.log("Password: " + req.body.pwd);
   console.log(" Forgot Password UserId: " + req.body.userIdFrgPwd);
+  console.log(" Email for App Resend Link: " + req.body.emailAppDownloadlink);
   let userid = req.body.userId;
   let pwd = req.body.pwd;
   let userIdPwd = req.body.userIdPwd;
   let userIdFrgPwd = req.body.userIdFrgPwd;
+  let emailAppDownloadlink = req.body.emailAppDownloadlink;
   if (userid) {
     let message = "Activate User with UserID API Test";
     request.get(
@@ -324,6 +326,30 @@ app.post('/adminuser', function(req, res) {
         console.log('body:', JSON.stringify(body));
       }
     ); 
+    //res.render('adminuser', {serverMessage: message, apiResponse: apiResponse});
+  }
+  else if (emailAppDownloadlink) {
+    let message = "Email App Download API Test";
+    apiResponse = "App Downlaod Link: ";
+    request.get(
+      {
+        uri: `http://${restApiUrl}:${restApiPort}/api/user/appresend/`+emailAppDownloadlink,
+        json: true
+      },
+      (error, response, body) => {
+        //console.log('Sent register:\n', params, body);
+        console.log('error:', error); // Print the error if one occurred
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        if (body && response.statusCode == 200)
+          apiResponse = "Download App Link send successfully at email: " +   emailAppDownloadlink;
+        else 
+          apiResponse = "Download App Link send failed for email: " +   emailAppDownloadlink;
+        res.render('adminuser', {serverMessage: message, apiResponse: apiResponse});
+        //res.render('adminuser', {serverMessage: message});
+        console.log('body:', JSON.stringify(body));
+      }
+    ); 
+    console.log(" In Email App Download Method: " + emailAppDownloadlink);
     //res.render('adminuser', {serverMessage: message, apiResponse: apiResponse});
   }
 });  
