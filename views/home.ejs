@@ -29,15 +29,23 @@
             </div>
             </nav>
         </header>
-        <div class="container">
+        <div class="container" > 
+            <ul class="list-group mb-5">
+                <a  class="list-group-item" href="/getall">Get All Users</a>
+                <a class="list-group-item"  href="/finduserform">Find User</a>
+                <a class="list-group-item"  href="/registerform">Register</a>
+                <a class="list-group-item"  href="/loginform">Login</a>
+                <a class="list-group-item"  href="/adminuserform">Admin User</a>
+            </ul>
+        </div>
+
+        <!--<div class="container">
             <a class="navbar-brand" href="/getall">Get All Users</a>
              <a class="navbar-brand" href="/finduserform">Find User</a>
-            <!--<a class="navbar-brand" href="/login">Login</a>-->
-            <!--<a class="navbar-brand" href="/register">Register</a>-->
             <a class="navbar-brand" href="/registerform">Register</a>
             <a class="navbar-brand" href="/loginform">Login</a>
             <a class="navbar-brand" href="/adminuserform">Admin User</a>
-        </div>
+        </div>-->
     </body>
     <script>
         var clientMessage =  <%- JSON.stringify(serverMessage) %>
