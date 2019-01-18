@@ -153,8 +153,12 @@ app.post('/register', function(req, res) {
 app.post('/finduser', function(req, res) {
   console.log("Email: " + req.body.email);
   console.log("UserID: " + req.body.userId);
+  console.log("Delete UserID: " + req.body.deleteUserId);
+  console.log("DeleteFlag: " + req.body.deleteFlag);
   let email = req.body.email;
   let userid = req.body.userId;
+  let deleteuserid = req.body.deleteUserId;
+  let deleteFlag = req.body.deleteFlag;
 
   if (email) {
     let message = "Find User with Email API Test";
@@ -183,7 +187,7 @@ app.post('/finduser', function(req, res) {
         }
       );
   }
-  else {
+  else if (userid) {
      console.log("UserID: " + req.body.userId);
      let message = "Find User with UserID API Test";
       /*const params = {
@@ -209,6 +213,32 @@ app.post('/finduser', function(req, res) {
             console.log('body:', JSON.stringify(body));
           }
         ); 
+  }
+  else if (deleteuserid != null && deleteFlag == 'Y') {
+    console.log("Delete userID: " + deleteuserid);
+    console.log("Delete Flag: " + deleteFlag);
+    let message = "Delete User API Test";
+    apiResponse = "Delete User API Test: ";
+    request.delete(
+      {
+        uri: `http://${restApiUrl}:${restApiPort}/api/user/`+deleteuserid,
+        json: true
+      },
+      (error, response, body) => {
+        //console.log('Sent register:\n', params, body);
+        console.log('error:', error); // Print the error if one occurred
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        let message = "Delete User API Test";
+        if (body)
+          apiResponse = "Delete User Success with userID: " + deleteuserid;
+        else 
+          apiResponse = "Delete User Failed with userID: " + deleteuserid;
+        res.render('finduser', {serverMessage: message, apiResponse: apiResponse});
+        //res.render('register', {serverMessage: message});
+        console.log('body:', JSON.stringify(body));
+      }
+    ); 
+    //res.render('finduser', {serverMessage: message, apiResponse: apiResponse});
   }
 });
 

@@ -74,6 +74,7 @@
              <button class="tablinks" onclick="openFinduser(event, 'FindByEmail')">FindByEmail</button>
               <button class="tablinks" onclick="openFinduser(event, 'FindByName')">FindByName</button>
               <button class="tablinks" onclick="openFinduser(event, 'FindById')">FindById</button>
+              <button class="tablinks" onclick="openFinduser(event, 'DeleteById')">DeleteById</button>
             </div>
 
             <div id="FindByEmail" class="tabcontent">
@@ -94,6 +95,14 @@
               <form name="form1_withId" action="/finduser" method="post">
                 <p>Enter UserID:<input name="userId" type="text" required/>
                  <button type="submit" class="btn btn-default">Find</button>  
+              </form>
+            </div>
+
+            <div id="DeleteById" class="tabcontent">
+              <form name="form1_deletewithId" action="/finduser" method="post">
+                <p>Enter UserID:<input name="deleteUserId" type="text" required/>
+                <p>Delete - are you sure.<input name="deleteFlag" type="text" required/>  
+                <button type="submit" class="btn btn-default">Delete</button>  
               </form>
             </div>
         </div>
